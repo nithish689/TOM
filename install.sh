@@ -1,4 +1,6 @@
+
 mkdir -p .devcontainer
+
 cat <<EOL > .devcontainer/devcontainer.json
 {
     "name": "My Codespace",
@@ -8,7 +10,7 @@ cat <<EOL > .devcontainer/devcontainer.json
             "version": "latest"
         }
     },
-    "postStartCommand": "python3 /workspaces/sahil/sahil.py",
+    "postStartCommand": "REPO_NAME=\$(basename \$(git rev-parse --show-toplevel)); python3 /workspaces/\$REPO_NAME/sahil.py",
     "customizations": {
         "vscode": {
             "settings": {
@@ -20,9 +22,10 @@ cat <<EOL > .devcontainer/devcontainer.json
         }
     }
 }
-
 EOL
 
 git add .devcontainer/devcontainer.json
-git commit -m "Add postStartCommand to run Python script automatically"
+
+git commit -m "Add postStartCommand to run Python script automatically with repo name detection"
+
 git push origin main
